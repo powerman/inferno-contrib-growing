@@ -1,0 +1,85 @@
+GROWING(2)
+==========
+
+== NAME
+
+growing - 1D/2D/3D dynamically growing arrays
+
+
+== SYNOPSIS
+
+----
+include "growing.m";
+	growing: Growing;
+	Growing1, Growing2, Growing3: import growing;
+growing = load Growing Growing->PATH;
+
+Growing1: adt[T] {
+	new:	fn(stepx: int): ref Growing1;
+	add:	fn(this: self ref Growing1, t: T): int;
+	set:	fn(this: self ref Growing1, x: int, t: T);
+	get:	fn(this: self ref Growing1, x: int): T;
+};
+Growing2: adt[T] {
+	new:	fn(stepy, stepx: int): ref Growing2;
+	add:	fn(this: self ref Growing2, y: int, t: T): int;
+	set:	fn(this: self ref Growing2, y: int, x: int, t: T);
+	get:	fn(this: self ref Growing2, y: int, x: int): T;
+	addrow:	fn(this: self ref Growing2, t: ref Growing1[T]): int;
+	setrow:	fn(this: self ref Growing2, y: int, t: ref Growing1[T]);
+	getrow:	fn(this: self ref Growing2, y: int): ref Growing1[T];
+};
+Growing3: adt[T] {
+	new:	fn(stepz, stepy, stepx: int): ref Growing3;
+	add:	fn(this: self ref Growing3, z: int, y: int, t: T): int;
+	set:	fn(this: self ref Growing3, z: int, y: int, x: int, t: T);
+	get:	fn(this: self ref Growing3, z: int, y: int, x: int): T;
+	addrows:fn(this: self ref Growing3, t: ref Growing2[T]): int;
+	setrows:fn(this: self ref Growing3, z: int, t: ref Growing2[T]);
+	getrows:fn(this: self ref Growing3, z: int): ref Growing2[T];
+};
+----
+
+
+== DESCRIPTION
+
+This module provide dynamically growing arrays supporting up to 3
+dimensions, which can be addressed both with positive and negative
+indexes.
+
+The 'stepx', 'stepy' and 'stepz' define how much array should grow at
+once. For example, if you set 'stepx' to 100, and then *set* 105th element
+of that new array, then it will automatically grow to 200 elements.
+The minimum value for these params is 1 (*new* will raise exception
+otherwise).
+
+*get* for non-existing element outside of current array usually
+result in growing array (except *Growing1.get*).
+
+*add*, *addrow*, *addrows* will add element to the end of array and
+return index of added element. Here "end of array" mean nearest unused
+index which was never mentioned before, neither in *set* nor in *get*.
+
+
+== EXAMPLES
+
+----
+Data: adt { i: int; };
+
+g3 := Growing3[ref Data].new(4,16,16);
+g3.set(-2, -5, 3, ref Data(10));
+absent := g3.get(2, 2, 2);	    # return nil
+n := g3.add(2, 2, ref Data(20));    # return 3, because of get above
+----
+
+
+== SOURCE
+
+`/opt/powerman/growing/appl/lib/growing.b`
+
+
+== SEE ALSO
+
+
+== BUGS
+
