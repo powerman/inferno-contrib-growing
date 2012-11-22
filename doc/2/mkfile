@@ -23,3 +23,6 @@ nuke:V:		    nuke-man
 nuke-man:V:
 	cd $MANINSTDIR; rm -f $MANTARG
 
+test:VQ:
+	# no tests
+
