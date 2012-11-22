@@ -1,0 +1,19 @@
+<../../mkconfig
+
+DIRS=\
+	t\
+
+<$ROOT/mkfiles/mksubdirs
+test:V: test-$SHELLTYPE
+
+TARG=\
+	growing.dis\
+
+SYSMODULES=\
+
+MODULES=\
+	../../module/growing.m\
+
+DISBIN=../../dis/lib
+
+<$ROOT/mkfiles/mkdis
