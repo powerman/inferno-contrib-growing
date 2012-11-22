@@ -34,8 +34,9 @@ Growing1[T].add(this: self ref Growing1, t: T): int
 	x := this.next++;
 
 	i := x + this.offset;
-	if(i == len this.a){
-		this.a = grow(this.a, this.stepx);
+	if(i >= len this.a){
+		g := (i - len this.a + this.stepx) / this.stepx * this.stepx;
+		this.a = grow(this.a, g);
 	}
 
 	this.a[i] = t;
@@ -129,9 +130,10 @@ Growing2[T].addrow(this: self ref Growing2, t: ref Growing1[T]): int
 	y := this.next++;
 
 	i := y + this.offset;
-	if(i == len this.a){
-		this.a = grow(this.a, this.stepy);
-		this.a[len this.a - this.stepy:] = array[this.stepy] of { * => Growing1[T].new(this.stepx) };
+	if(i >= len this.a){
+		g := (i - len this.a + this.stepy) / this.stepy * this.stepy;
+		this.a = grow(this.a, g);
+		this.a[len this.a - g:] = array[g] of { * => Growing1[T].new(this.stepx) };
 	}
 
 	this.a[i] = t;
@@ -230,9 +232,10 @@ Growing3[T].addrows(this: self ref Growing3, t: ref Growing2[T]): int
 	z := this.next++;
 
 	i := z + this.offset;
-	if(i == len this.a){
-		this.a = grow(this.a, this.stepz);
-		this.a[len this.a - this.stepz:] = array[this.stepz] of { * => Growing2[T].new(this.stepy, this.stepx) };
+	if(i >= len this.a){
+		g := (i - len this.a + this.stepz) / this.stepz * this.stepz;
+		this.a = grow(this.a, g);
+		this.a[len this.a - g:] = array[g] of { * => Growing2[T].new(this.stepy, this.stepx) };
 	}
 
 	this.a[i] = t;
