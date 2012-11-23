@@ -9,6 +9,7 @@ Growing: module
 		add:	fn(this: self ref Growing1, t: T): int;
 		set:	fn(this: self ref Growing1, x: int, t: T);
 		get:	fn(this: self ref Growing1, x: int): T;
+		all:	fn(this: self ref Growing1): (array of T, int);
 
 		# internal
 		a:	array of T;

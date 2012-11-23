@@ -74,6 +74,12 @@ Growing1[T].get(this: self ref Growing1, x: int): T
 		return nil;
 	return this.a[i];
 }
+	
+Growing1[T].all(this: self ref Growing1): (array of T, int)
+{
+	return (this.a[0:this.offset+this.next], -this.offset);
+}
+
 
 #
 # Growing2

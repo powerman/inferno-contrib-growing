@@ -4,6 +4,7 @@ TARG=\
 
 TESTS=\
 	smoke.dis\
+	all.dis\
 	examples.dis\
 
 SYSMODULES=\

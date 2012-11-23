@@ -15,6 +15,7 @@ Growing1: adt[T] {
         add:    fn(this: self ref Growing1, t: T): int;
         set:    fn(this: self ref Growing1, x: int, t: T);
         get:    fn(this: self ref Growing1, x: int): T;
+        all:    fn(this: self ref Growing1): (array of T, int);
 };
 Growing2: adt[T] {
         new:    fn(stepy, stepx: int): ref Growing2;
@@ -73,6 +74,10 @@ index which was never mentioned before, neither in
 .B set
 nor in 
 .BR get .
+.PP
+.B all
+return current array and "real index" of 0 element (which will be
+negative if you've added elements with negative indexes or 0 otherwise).
 .PP
 .B grow
 will append (if 

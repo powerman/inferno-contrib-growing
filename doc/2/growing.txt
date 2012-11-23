@@ -21,6 +21,7 @@ Growing1: adt[T] {
 	add:	fn(this: self ref Growing1, t: T): int;
 	set:	fn(this: self ref Growing1, x: int, t: T);
 	get:	fn(this: self ref Growing1, x: int): T;
+	all:	fn(this: self ref Growing1): (array of T, int);
 };
 Growing2: adt[T] {
 	new:	fn(stepy, stepx: int): ref Growing2;
@@ -61,6 +62,9 @@ result in growing array (except *Growing1.get*).
 *add*, *addrow*, *addrows* will add element to the end of array and
 return index of added element. Here "end of array" mean nearest unused
 index which was never mentioned before, neither in *set* nor in *get*.
+
+*all* return current array and "real index" of 0 element (which will be
+negative if you've added elements with negative indexes or 0 otherwise).
 
 *grow* will append (if 'size' positive) or prepend (if 'size' negative)
 abs('size') elements to 'a' and return modified array.
