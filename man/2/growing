@@ -8,6 +8,8 @@ include "growing.m";
         Growing1, Growing2, Growing3: import growing;
 growing = load Growing Growing->PATH;
 
+grow: fn[T](a: array of T, size: int): array of T;
+
 Growing1: adt[T] {
         new:    fn(stepx: int): ref Growing1;
         add:    fn(this: self ref Growing1, t: T): int;
@@ -71,6 +73,18 @@ index which was never mentioned before, neither in
 .B set
 nor in 
 .BR get .
+.PP
+.B grow
+will append (if 
+.I size
+positive) or prepend (if 
+.I size
+negative)
+abs(
+.IR size )
+elements to 
+.I a
+and return modified array.
 .SH EXAMPLES
 .EX
 Data: adt { i: int; };

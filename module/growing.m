@@ -2,6 +2,8 @@ Growing: module
 {
 	PATH: con "/opt/powerman/growing/dis/lib/growing.dis";
 
+	grow: fn[T](a: array of T, size: int): array of T;
+
 	Growing1: adt[T] {
 		new:	fn(stepx: int): ref Growing1;
 		add:	fn(this: self ref Growing1, t: T): int;

@@ -14,6 +14,8 @@ include "growing.m";
 	Growing1, Growing2, Growing3: import growing;
 growing = load Growing Growing->PATH;
 
+grow: fn[T](a: array of T, size: int): array of T;
+
 Growing1: adt[T] {
 	new:	fn(stepx: int): ref Growing1;
 	add:	fn(this: self ref Growing1, t: T): int;
@@ -60,6 +62,8 @@ result in growing array (except *Growing1.get*).
 return index of added element. Here "end of array" mean nearest unused
 index which was never mentioned before, neither in *set* nor in *get*.
 
+*grow* will append (if 'size' positive) or prepend (if 'size' negative)
+abs('size') elements to 'a' and return modified array.
 
 == EXAMPLES
 
