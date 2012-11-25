@@ -9,7 +9,7 @@ growing - 1D/2D/3D dynamically growing arrays
 == SYNOPSIS
 
 ----
-include "growing.m";
+include "opt/powerman/growing/module/growing.m";
 	growing: Growing;
 	Growing1, Growing2, Growing3: import growing;
 growing = load Growing Growing->PATH;
