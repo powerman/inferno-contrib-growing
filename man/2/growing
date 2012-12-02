@@ -1,4 +1,4 @@
-.TH GROW, GROWING1, GROWING2, GROWING3 2
+.TH GROWING 2
 .SH NAME
 grow, Growing1, Growing2, Growing3 \- 1D/2D/3D dynamically growing arrays
 .SH SYNOPSIS
