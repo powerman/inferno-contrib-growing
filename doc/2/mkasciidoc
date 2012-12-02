@@ -19,7 +19,7 @@ $MANINSTDIR/%:		%.txt-$OSTARG
 	    false
 	fi
 
-nuke:V:		    nuke-man
+nuke:V:			nuke-man
 
 nuke-man:V:
 	cd $MANINSTDIR; rm -f $MANTARG

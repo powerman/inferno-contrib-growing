@@ -3,7 +3,7 @@ GROWING(2)
 
 == NAME
 
-growing - 1D/2D/3D dynamically growing arrays
+grow, Growing1, Growing2, Growing3 - 1D/2D/3D dynamically growing arrays
 
 
 == SYNOPSIS

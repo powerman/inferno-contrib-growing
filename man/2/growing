@@ -1,6 +1,6 @@
-.TH GROWING 2
+.TH GROW, GROWING1, GROWING2, GROWING3 2
 .SH NAME
-growing \- 1D/2D/3D dynamically growing arrays
+grow, Growing1, Growing2, Growing3 \- 1D/2D/3D dynamically growing arrays
 .SH SYNOPSIS
 .EX
 include "opt/powerman/growing/module/growing.m";
