@@ -3,7 +3,7 @@
 #	cd /…/project;	prove -r; mk test; appl/lib/t/smoke.t
 #	cd appl/lib;	prove -r; mk test; t/smoke.t
 #	cd t;		prove -r; mk test; ./smoke.t
-# It require PKGDIR and PKGROOT variables set in mkfile.
+# It require PKGDIR, EMUPKGDIR and EMUCMD variables set in mkfile.
 
 # When this script executed not by mk (i.e. by prove or manually) it won't
 # have variables from mkfile in environment and will need to fetch them.
@@ -15,6 +15,6 @@ function getvar() {
 SUBDIR=$(pwd)
 cd $(getvar PKGDIR)
 PKGDIR=$(pwd)
-DIS=$(getvar PKGROOT)${SUBDIR:${#PKGDIR}}/$(dirname $0)/$(basename $0 .t).dis
+DIS=$(getvar EMUPKGDIR)${SUBDIR:${#PKGDIR}}/$(dirname $0)/$(basename $0 .t).dis
 
-emu-g sh -c "run /lib/sh/profile; $DIS; shutdown -h" || :
+eval "$(getvar EMUCMD) \$DIS"
