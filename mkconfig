@@ -9,6 +9,10 @@ PKGROOT=/opt/powerman/growing
 OPTDIR=${OSTARG:Inferno=/}
 OPTDIR=${OPTDIR:os=$INFERNO_HOME}
 
+# MKFILES: path to this project's mkfiles/
+# Used to find helper files used by some mkfiles and ease including them.
+MKFILES=$PKGDIR/mkfiles
+
 # Default target (first target in first loaded mkfile).
-usage:VQ:
+usage:QV:
     echo mk all, install, test, clean or nuke

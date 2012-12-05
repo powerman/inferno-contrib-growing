@@ -5,4 +5,4 @@ PKGDIR=..
 DIRS=\
 	lib\
 
-<$PKGDIR/mkfiles/mksubdirs
+<$MKFILES/mksubdirs

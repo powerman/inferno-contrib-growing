@@ -41,8 +41,8 @@ nuke:V:			clean
 %.s:			%.b
 	limbo $LIMBOFLAGS -w -G -S $stem.b
 
-%.t:			$PKGDIR/mkfiles/runtest.sh
-	cp $PKGDIR/mkfiles/runtest.sh $stem.t
+%.t:			$MKFILES/runtest.sh
+	cp $MKFILES/runtest.sh $stem.t
 
 %.test-Inferno:V:
 	d=`{pwd}; cd $PKGDIR; $d/$stem.dis

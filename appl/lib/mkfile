@@ -5,7 +5,7 @@ PKGDIR=../..
 DIRS=\
 	t\
 
-<$PKGDIR/mkfiles/mksubdirs
+<$MKFILES/mksubdirs
 
 
 DISBIN=$PKGDIR/dis/lib
@@ -20,4 +20,4 @@ OPTMODULES=\
 MODULES=\
 	$PKGDIR/module/growing.m\
 
-<$PKGDIR/mkfiles/mkdis
+<$MKFILES/mkdis

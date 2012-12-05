@@ -5,4 +5,4 @@ PKGDIR=..
 DIRS=\
 	2\
 
-<$PKGDIR/mkfiles/mksubdirs
+<$MKFILES/mksubdirs

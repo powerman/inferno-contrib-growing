@@ -7,4 +7,4 @@ MANDIR=$PKGDIR/man/2
 MANTARG=\
 	growing\
 
-<$PKGDIR/mkfiles/mkasciidoc
+<$MKFILES/mkasciidoc

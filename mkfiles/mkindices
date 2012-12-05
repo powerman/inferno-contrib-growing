@@ -2,6 +2,8 @@
 # 	2\
 # 
 
+MKINDICES=$MKFILES/mkindices
+
 all:V:			indices-$OSTARG
 
 install:V:		all
@@ -16,19 +18,44 @@ clean-%:V:
 nuke:V:			clean
 
 indices-Inferno:QV:
-	for (j in $MANDIRS) {
-		test -d $j && {
-			d=`{pwd}
-			echo '(cd '$j'; mk -f …/mkindices-'$OSTARG' MANPAGES=… INDEX)'
-			cd $j; mk -f ../$PKGDIR/mkfiles/mkindices-$OSTARG $MKFLAGS 'MANPAGES=`{ls | grep -v ''^INDEX$''}' INDEX
-			cd $d
-		} || test ! -e $j
+	MKINDICESABS=`{ cleanname -d `{pwd} $"MKINDICES }
+	for j in $MANDIRS {
+		if { ftest -d $j } {
+			echo cd $j'; mk -f' $MKINDICES $MKFLAGS 'MANPAGES=… INDEX'
+			@{ pctl forkns; cd $j; mk -f $MKINDICESABS $MKFLAGS 'MANPAGES=`{ ls | grep -v ''^INDEX$'' }' INDEX }
+		} {
+			! ftest -e $j || raise $j^' not a directory'
+		}
 	}
 
 indices-os:QV:
+	MKINDICESABS=$(realpath $MKINDICES)
 	for j in $MANDIRS; do
 		if test -d $j; then
-			echo "(cd $j; mk -f …/mkindices-$OSTARG MANPAGES=… INDEX)"
-			(cd $j; mk -f ../$PKGDIR/mkfiles/mkindices-$OSTARG $MKFLAGS "MANPAGES=$(echo $(ls | grep -v '^INDEX$'))" INDEX) || exit 1
+			echo cd $j'; mk -f' $MKINDICES $MKFLAGS 'MANPAGES=… INDEX'
+			(cd $j; mk -f $MKINDICESABS $MKFLAGS "MANPAGES=$(echo $(ls | grep -v '^INDEX$'))" INDEX) || exit 1
+		else
+			test ! -e $j || { echo $j not a directory; exit 1; }
 		fi
 	done
+
+INDEX:N:		INDEX-$OSTARG
+
+INDEX-Inferno:QV:	$MANPAGES
+	test -z $"prereq || {
+		echo 'Require perl (run mk install in host os)'
+		raise 'not implemented'
+	}
+
+INDEX-os:QV:		$MANPAGES
+	if test -n "$prereq"; then
+	    echo 'Generating INDEX'
+	    perl -0777 -ne '
+		next if $ARGV eq "INDEX";
+		s/\A.*?^\.SH\s+NAME\s*\n(.*?)^\.SH\s.*/$1/ms;
+		s/(?:\s|\\)-.*//ms;
+		$f=$ARGV;
+		$f=~s/0intro/intro/ms;
+		print "$_ $ARGV\n" for sort map {lc} $f, /([\w\/!~.-]+)/msg;
+		' * | uniq >INDEX
+	fi

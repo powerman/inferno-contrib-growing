@@ -4,9 +4,12 @@
 # 	somelib\
 # 
 
+KEEPMTIME=${OSTARG:Inferno=-x}
+KEEPMTIME=${KEEPMTIME:os=-p}
+
 all:V:			${MANTARG:%=%.man}
 
-install:V:		all ${MANTARG:%=$MANDIR/%}
+install:V:		${MANTARG:%=$MANDIR/%}
 
 test:V:			install
 
@@ -18,11 +21,11 @@ nuke:V:			clean
 
 %.man:N:		%.man-$OSTARG
 
-%.man-Inferno:VQ:	%.txt
+%.man-Inferno:QV:	%.txt
 	echo 'Require asciidoc (run mk install in host os)'
 	raise 'not implemented'
 
-%.man-os:VQ:		%.txt
+%.man-os:QV:		%.txt
 	if ! asciidoc 2>/dev/null; then
 	    echo 'Require asciidoc: http://www.methods.co.nz/asciidoc/'
 	    false
@@ -31,9 +34,10 @@ nuke:V:			clean
 	    false
 	else
 	    echo asciidoc -d manpage -b 9man $stem.txt
-	    asciidoc -d manpage -b 9man $stem.txt
+	    asciidoc -d manpage -b 9man $stem.txt 
+	    # avoid redundant INDEX regen on next mk all
+	    touch -c -r $stem.txt -d '+1 second' $stem.man
 	fi
 
 $MANDIR/%:		%.man
-	sleep 1
-	cp $stem.man $MANDIR/$stem
+	rm -f $MANDIR/$stem && cp $KEEPMTIME $stem.man $MANDIR/$stem

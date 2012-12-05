@@ -20,4 +20,4 @@ OPTMODULES=\
 MODULES=\
 	$PKGDIR/module/growing.m\
 
-<$PKGDIR/mkfiles/mktest
+<$MKFILES/mktest

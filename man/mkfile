@@ -5,4 +5,4 @@ PKGDIR=..
 MANDIRS=\
 	2\
 
-<$PKGDIR/mkfiles/mkindices
+<$MKFILES/mkindices

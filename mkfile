@@ -7,4 +7,4 @@ DIRS=\
 	doc\
 	man\
 
-<$PKGDIR/mkfiles/mksubdirs
+<$MKFILES/mksubdirs
