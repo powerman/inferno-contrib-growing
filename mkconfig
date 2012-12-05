@@ -6,7 +6,8 @@ PKGROOT=/opt/powerman/growing
 
 # OPTDIR: path to directory with opt/ subdir.
 # Used to find modules by relative path (e.g. opt/powerman/tap/module/t.m).
-<|$PKGDIR/mkfiles/mk-OPTDIR-$OSTARG.sh
+OPTDIR=${OSTARG:Inferno=/}
+OPTDIR=${OPTDIR:os=$INFERNO_HOME}
 
 # Default target (first target in first loaded mkfile).
 usage:VQ:
