@@ -1,0 +1,5 @@
+INDEX:Q:    $MANPAGES
+	if {test -n $prereq ''} {
+		echo 'Require perl (run mk install in host os)'
+		raise 'not implemented'
+	} || test -z ''

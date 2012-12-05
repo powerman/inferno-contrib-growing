@@ -1,0 +1,13 @@
+INDEX:Q:    $MANPAGES
+	if [ "$prereq" != "" ]; then
+	    echo "Generating INDEX"
+	    sleep 1
+	    perl -0777 -ne '
+		next if $ARGV eq "INDEX";
+		s/\A.*?^\.SH\s+NAME\s*\n(.*?)^\.SH\s.*/$1/ms;
+		s/(?:\s|\\)-.*//ms;
+		$f=$ARGV;
+		$f=~s/0intro/intro/ms;
+		print "$_ $ARGV\n" for sort map {lc} $f, /([\w\/!~.-]+)/msg;
+		' * | uniq >INDEX
+	fi
