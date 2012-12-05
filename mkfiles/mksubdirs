@@ -1,0 +1,8 @@
+# DIRS=\
+# 	subdir1\
+# 	subdir2\
+# 
+
+test:V:		install test-$SHELLTYPE
+
+<$ROOT/mkfiles/mksubdirs

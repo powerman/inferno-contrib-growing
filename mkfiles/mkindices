@@ -1,0 +1,40 @@
+# MANDIRS=\
+# 	2\
+# 
+
+all:V:			${MANDIRS:%=%/INDEX}
+
+install:V:		all
+
+test:V:			install
+
+clean:V:		${MANDIRS:%=clean-%}
+
+clean-%:V:
+	rm -f $stem/INDEX
+
+nuke:V:			clean
+
+%/INDEX:N:		%.idx-$OSTARG
+
+%.idx-Inferno:VQ:
+	echo 'Require perl (run mk install in host os)'
+	raise 'not implemented'
+
+%.idx-os:VQ:
+	if [ "$prereq" != "" ]; then
+	    echo "Generating $stem/INDEX"
+	    cd $stem
+	    sleep 1
+	    perl -0777 -ne '
+		next if $ARGV eq "INDEX";
+		s/\A.*?^\.SH\s+NAME\s*\n(.*?)^\.SH\s.*/$1/ms;
+		s/(?:\s|\\)-.*//ms;
+		$f=$ARGV;
+		$f=~s/0intro/intro/ms;
+		print "$_ $ARGV\n" for sort map {lc} $f, /([\w\/!~.-]+)/msg;
+		' * | uniq >INDEX
+	fi
+
+# Generate prereq for %.idx-$OSTARG:
+<|$PKGDIR/mkfiles/mk-idx-$OSTARG.sh

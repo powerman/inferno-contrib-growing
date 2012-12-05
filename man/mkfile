@@ -1,6 +1,8 @@
-<$ROOT/mkconfig
+PKGDIR=..
+<$PKGDIR/mkconfig
 
-MANTARG=\
-	2/growing\
 
-<mkindices
+MANDIRS=\
+	2\
+
+<$PKGDIR/mkfiles/mkindices

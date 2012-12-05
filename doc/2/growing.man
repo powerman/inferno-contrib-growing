@@ -1,0 +1,108 @@
+.TH GROWING 2
+.SH NAME
+grow, Growing1, Growing2, Growing3 \- 1D/2D/3D dynamically growing arrays
+.SH SYNOPSIS
+.EX
+include "opt/powerman/growing/module/growing.m";
+        growing: Growing;
+        Growing1, Growing2, Growing3: import growing;
+growing = load Growing Growing->PATH;
+
+grow: fn[T](a: array of T, size: int): array of T;
+
+Growing1: adt[T] {
+        new:    fn(stepx: int): ref Growing1;
+        add:    fn(this: self ref Growing1, t: T): int;
+        set:    fn(this: self ref Growing1, x: int, t: T);
+        get:    fn(this: self ref Growing1, x: int): T;
+        all:    fn(this: self ref Growing1): (array of T, int);
+};
+Growing2: adt[T] {
+        new:    fn(stepy, stepx: int): ref Growing2;
+        add:    fn(this: self ref Growing2, y: int, t: T): int;
+        set:    fn(this: self ref Growing2, y: int, x: int, t: T);
+        get:    fn(this: self ref Growing2, y: int, x: int): T;
+        addrow: fn(this: self ref Growing2, t: ref Growing1[T]): int;
+        setrow: fn(this: self ref Growing2, y: int, t: ref Growing1[T]);
+        getrow: fn(this: self ref Growing2, y: int): ref Growing1[T];
+};
+Growing3: adt[T] {
+        new:    fn(stepz, stepy, stepx: int): ref Growing3;
+        add:    fn(this: self ref Growing3, z: int, y: int, t: T): int;
+        set:    fn(this: self ref Growing3, z: int, y: int, x: int, t: T);
+        get:    fn(this: self ref Growing3, z: int, y: int, x: int): T;
+        addrows:fn(this: self ref Growing3, t: ref Growing2[T]): int;
+        setrows:fn(this: self ref Growing3, z: int, t: ref Growing2[T]);
+        getrows:fn(this: self ref Growing3, z: int): ref Growing2[T];
+};
+
+.EE
+.SH DESCRIPTION
+.PP
+This module provide dynamically growing arrays supporting up to 3
+dimensions, which can be addressed both with positive and negative
+indexes.
+.PP
+The 
+.IR stepx ,
+.I stepy
+and 
+.I stepz
+define how much array should grow at
+once. For example, if you set 
+.I stepx
+to 100, and then 
+.B set
+105th element
+of that new array, then it will automatically grow to 200 elements.
+The minimum value for these params is 1 (
+.B new
+will raise exception
+otherwise).
+.PP
+.B get
+for non-existing element outside of current array usually
+result in growing array (except 
+.BR Growing1.get ).
+.PP
+.BR add ,
+.BR addrow ,
+.B addrows
+will add element to the end of array and
+return index of added element. Here "end of array" mean nearest unused
+index which was never mentioned before, neither in 
+.B set
+nor in 
+.BR get .
+.PP
+.B all
+return current array and "real index" of 0 element (which will be
+negative if you've added elements with negative indexes or 0 otherwise).
+.PP
+.B grow
+will append (if 
+.I size
+positive) or prepend (if 
+.I size
+negative)
+abs(
+.IR size )
+elements to 
+.I a
+and return modified array.
+.SH EXAMPLES
+.EX
+Data: adt { i: int; };
+
+g3 := Growing3[ref Data].new(4,16,16);
+g3.set(-2, -5, 3, ref Data(10));
+absent := g3.get(2, 2, 2);          # return nil
+n := g3.add(2, 2, ref Data(20));    # return 3, because of get above
+
+.EE
+.SH SOURCE
+.PP
+.B /opt/powerman/growing/appl/lib/growing.b
+.br
+.SH SEE ALSO
+.SH BUGS

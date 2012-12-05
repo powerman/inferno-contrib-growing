@@ -1,19 +1,23 @@
-<../../mkconfig
+PKGDIR=../..
+<$PKGDIR/mkconfig
+
 
 DIRS=\
 	t\
 
-<$ROOT/mkfiles/mksubdirs
-test:V: test-$SHELLTYPE
+<$PKGDIR/mkfiles/mksubdirs
+
+
+DISBIN=$PKGDIR/dis/lib
 
 TARG=\
 	growing.dis\
 
 SYSMODULES=\
 
+OPTMODULES=\
+
 MODULES=\
-	../../module/growing.m\
+	$PKGDIR/module/growing.m\
 
-DISBIN=../../dis/lib
-
-<$ROOT/mkfiles/mkdis
+<$PKGDIR/mkfiles/mkdis

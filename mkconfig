@@ -1,1 +1,13 @@
 <$ROOT/mkconfig
+
+# PKGROOT: path to this project's root inside emu.
+# Used to run tests from host os (e.g. emu-g $PKGROOT/appl/lib/t/smoke.dis).
+PKGROOT=/opt/powerman/growing
+
+# OPTDIR: path to directory with opt/ subdir.
+# Used to find modules by relative path (e.g. opt/powerman/tap/module/t.m).
+<|$PKGDIR/mkfiles/mk-OPTDIR-$OSTARG.sh
+
+# Default target (first target in first loaded mkfile).
+usage:VQ:
+    echo mk all, install, test, clean or nuke

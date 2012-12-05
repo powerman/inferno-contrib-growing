@@ -1,19 +1,23 @@
-<../../../mkconfig
+PKGDIR=../../..
+<$PKGDIR/mkconfig
 
-TARG=\
 
 TESTS=\
 	smoke.dis\
 	all.dis\
 	examples.dis\
 
+TESTTARG=\
+
 SYSMODULES=\
 	sys.m\
 	draw.m\
-	arg.m\
+
+OPTMODULES=\
+	opt/powerman/tap/module/t.m\
+	opt/powerman/tap/module/tap.m\
 
 MODULES=\
-	../../../module/growing.m\
+	$PKGDIR/module/growing.m\
 
-<mktest
-LIMBOFLAGS=$LIMBOFLAGS -I$INFERNO_HOME
+<$PKGDIR/mkfiles/mktest
