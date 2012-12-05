@@ -45,7 +45,7 @@ nuke:V:			clean
 	cp $PKGDIR/mkfiles/runtest.sh $stem.t
 
 %.test-Inferno:V:
-	$stem.dis
+	d=`{pwd}; cd $PKGDIR; $d/$stem.dis
 
 %.test-os:V:
 	./$stem.t
