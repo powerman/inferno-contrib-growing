@@ -1,8 +1,0 @@
-# debug
-\.sbl$
-
-# build
-appl/.*\.dis$
-
-# tmp
-\.swp$
